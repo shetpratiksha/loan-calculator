@@ -7,7 +7,7 @@ import axios from 'axios';
 import ReactDOM from 'react-dom';
 import LoanCalcDetails from '../component/LoanCalc/LoanCalc';
 import Sidebar from '../component/Sidebar/Sidebar';
-import * as actionTypes from '../store/actions';
+// import * as actionTypes from '../store/actions';
 // import "./styles.css";
 import "rc-slider/assets/index.css";
 
@@ -26,42 +26,20 @@ class LoanCalc extends Component{
         localStorageData: [],
         error:false
     }
-    // componentWillReceiveProps({LAvalue,LDvalue}){
-    //     debugger
-    //     if (LAvalue != this.props.LAvalue || LDvalue != this.props.LDvalue) {
-    //         this.onClickHandler(LAvalue,LDvalue);
-    //     }
-    // }
-    
-    componentDidMount() {
-        debugger;
+   
+    sliderInputHandler(value){
+        console.log('val '+value);
+      //  let loanAmount, loanDuration;
         let loanAmount = this.state.LAvalue;
         let loanDuration = this.state.LDvalue;
-        //let loanCalcData = '';
-        
-        // historyDataArray.push({
-        //     'LA':loanAmount,
-        //     'LD':loanDuration
-        // })
+
+        historyDataArray.push({
+            'LA':loanAmount,
+            'LD':loanDuration
+        })
         this.onClickHandler(loanAmount,loanDuration);
     }
   
-    componentDidUpdate(prevProps, prevState){
-        debugger;
-        console.log('component mounted');
-        if (prevState.LAvalue !== this.state.LAvalue || prevState.LDvalue !== this.state.LDvalue) {
-            let loanAmount = this.state.LAvalue;
-            let loanDuration = this.state.LDvalue;
-            //let loanCalcData = '';
-            
-            historyDataArray.push({
-                'LA':loanAmount,
-                'LD':loanDuration
-            })
-            this.onClickHandler(loanAmount,loanDuration);
-        }
-    }
-
       
     onClickHandler = async(loanAmount,loanDuration) =>{
        
@@ -105,6 +83,7 @@ class LoanCalc extends Component{
         return(
             
             <div className="row" style={{padding:'30px'}}>
+                <h3 style={{textAlign:'center'}}>Loan Interest Calculator</h3>
                 <div className="col-md-2" >
                 <Sidebar
                     historyDataArray={historyDataArray}
@@ -112,27 +91,27 @@ class LoanCalc extends Component{
                 />
                 </div>
                 <div className="col-md-10">
-                Loan Amount: <Slider  dots
-                // step={20}
-                // onChange={value => this.updateValue(value)}
-                // onAfterChange={value => this.updatePrograValues(value)}
-                //dotStyle={{ borderColor: 'orange' }}
-                //activeDotStyle={{ borderColor: 'rgb(44, 71, 112)'}}
-                // marks={marks}
+                Loan Amount: <Slider
                 value={this.state.LAvalue} min={this.state.LAmin} max={this.state.LAmax}
-                onChange={value =>this.onLoanAmountSliderChange(value)} onAfterChange={value =>this.onLoanAmountAfterChange(value)}
+                onChange={value =>this.onLoanAmountSliderChange(value)} 
+               // onChange= {(value) =>this.sliderInputHandler(value)}
+               // onAfterChange={value =>this.onLoanAmountAfterChange(value)}
+                onAfterChange={value =>this.sliderInputHandler(value)}
                 />
                 <br />
-                Loan Duration: <Slider
+                Loan Duration: <Slider dots
                 value={this.state.LDvalue} min={this.state.LDmin} max={this.state.LDmax}
-                onChange={this.onLoanDurationSliderChange} onAfterChange={this.onLoanDurationAfterChange}
+                onChange={this.onLoanDurationSliderChange} 
+               // onChange= {(value) =>this.sliderInputHandler(value)}
+               // onAfterChange={this.onLoanDurationAfterChange}
+                onAfterChange={value =>this.sliderInputHandler(value)}
                 />
                 
                 {this.state.loanCalcData.map((loanDetails,index) => (
                      <LoanCalcDetails
                      key={index}
                      interestRate={loanDetails.interestRate}
-                     monthlyPayment={loanDetails.monthlyPayment.amount}
+                    monthlyPayment={loanDetails.monthlyPayment.amount}
                         />
                 ))}
                 </div>
@@ -152,8 +131,8 @@ class LoanCalc extends Component{
 
 // const mapDispatchToProps = dispatch =>{
 //     return{
-//         onLASliderSlide: (ingName) => dispatch({type:actionTypes.LA_SLIDER_SLIDE,ingredientName: ingName}),
-//         onLDSliderSlide: (ingName) => dispatch({type:actionTypes.LD_SLIDER_SLIDE, ingredientName:ingName})
+//         onSliderSlide: (ingName) => dispatch({type:actionTypes.SLIDER_SLIDE,value: ingName}),
+//         //onLDSliderSlide: (ingName) => dispatch({type:actionTypes.LD_SLIDER_SLIDE, ingredientName:ingName})
 //     }
 // }
 export default LoanCalc;

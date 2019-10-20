@@ -5,18 +5,16 @@ import App from './App';
 import { Provider } from 'react-redux'
 import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.css';
-import reducer from './store/reducer';
-import { createStore } from 'redux';
+// import reducer from './store/reducer';
+// import { createStore } from 'redux';
 
-const store = createStore(reducer);
+// const store = createStore(reducer);
 
 
 const app = (
-    <Provider store={store}>
-        {/* <BrowserRouter> */}
+   
             <App />  
-        {/* </BrowserRouter> */}
-    </Provider>
+      
 );
 
 ReactDOM.render(app, document.getElementById('root'));
