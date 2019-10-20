@@ -1,0 +1,2 @@
+export const LA_SLIDER_SLIDE = 'LA_SLIDER_SLIDE';
+export const LD_SLIDER_SLIDE = 'LD_SLIDER_SLIDE';
